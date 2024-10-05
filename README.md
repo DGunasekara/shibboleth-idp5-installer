@@ -1,7 +1,8 @@
 # Shibboleth IdP Version 5 Installer
 
 ## Overview
-The AAF Shibboleth IdP Installer is designed to automate the install of version 5 for the [Shibboleth IdP](https://shibboleth.atlassian.net/wiki/spaces/IDP5/overview) on a dedicated server with one of the following supported operating systems;
+The Shibboleth IdP Installer is designed to automate the install of version 5 for the [Shibboleth IdP](https://shibboleth.atlassian.net/wiki/spaces/IDP5/overview) on a dedicated server with one of the following supported operating systems;
+
 * Rocky Linux 8 or 9
 * Stream 8 or Stream 9
 * Redhat 8 or 9
@@ -20,11 +21,5 @@ This release is for Shibboleth version 5.1.3 running on Jetty 12.0.12
 ## License
 Apache License Version 2.0, January 2004
 
-# AAF Rapid IdP
 
-Need a managed, secure and highly available cloud Identity Provider solution?
-
-[Contact the AAF about Rapid IdP today.](https://aaf.edu.au/rapid/)
-
-[<img src="https://aaf.edu.au/images/Rapid-IdP.png"  width="500"/>](https://aaf.edu.au/rapid/)
 
