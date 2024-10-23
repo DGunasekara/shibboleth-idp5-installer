@@ -11,15 +11,15 @@
     <!--         The User's ID - UID                -->
     <!-- ========================================== -->
 
-    <!-- Option 1: Using the subject's canonicalized principal name -->
+    <!-- Option 1: Using the subject's canonicalized principal name 
     <AttributeDefinition id="uid" xsi:type="PrincipalName" />
-
+-->
     <!-- Option 2: From the user's UID attribute in the directory -->
-    <!--
+
     <AttributeDefinition id="uid" xsi:type="Simple">
        <InputDataConnector ref="ldap" attributeNames="uid" />
     </AttributeDefinition>
-    -->
+
 
     <!-- Option 3: From the user's sAMAccountName in Active Directory -->
     <!--
@@ -29,17 +29,27 @@
     -->
 
     <!-- ========================================== -->
-    <!--         AAF CORE ATTRIBUTES                -->
+    <!--         LIAF CORE ATTRIBUTES                -->
     <!-- ========================================== -->
 
-    <!-- auEduPersonSharedToken -->
+    <!-- auEduPersonSharedToken 
     <AttributeDefinition id="auEduPersonSharedToken" xsi:type="Simple">
         <InputDataConnector ref="sharedToken" attributeNames="auEduPersonSharedToken" />
     </AttributeDefinition>
+-->
 
+ <!-- eduPersonOrgUnitDN -->
+    <AttributeDefinition xsi:type="Simple" id="eduPersonOrgUnitDN">
+        <InputDataConnector ref="ldap" attributeNames="eduPersonOrgUnitDN" />
+    </AttributeDefinition>
     <!-- displayName -->
     <AttributeDefinition id="displayName" xsi:type="Simple">
        <InputDataConnector ref="ldap" attributeNames="displayName" />
+    </AttributeDefinition>
+
+ <!-- email -->
+    <AttributeDefinition xsi:type="Simple" id="email">
+        <InputDataConnector ref="ldap" attributeNames="uid" />
     </AttributeDefinition>
 
     <!-- eduPersonAffiliation -->
@@ -242,11 +252,11 @@
     <!--     AAF improtant Optional ATTRIBUTES       -->
     <!-- ========================================== -->
 
-    <!-- dsdStudentId - Used by myEquals -->
+    <!-- dsdStudentId - Used by myEquals 
     <AttributeDefinition xsi:type="Simple" id="dsdStudentId">
         <InputDataConnector ref="ldap" attributeNames="studentNumber" />
     </AttributeDefinition>
-
+-->
     <!-- cn (commonName) - Previously a CORE attribute, still used by many services -->
     <!--                   Note: Script is used to ensure cn is of the correct format -->
     <!--                         for the AAF. "FirstName SPACE Surname". -->
