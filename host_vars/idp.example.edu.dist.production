@@ -16,45 +16,47 @@ idp_entity_id: "https://idp.example.edu/idp/shibboleth"
 idp_attribute_scope: "example.edu"
 
 # Federation ID
-federation_id: "AAF"
+federation_id: "LIAF"
 
 # The federation's group id used for metadata-based attribute filtering
-federation_group_id: "https://md.aaf.edu.au/aaf-metadata.xml"
+federation_group_id: "https://fr.ac.lk/signedmetadata/metadata.xml"
 
 # Shared federation metadata
-metadata_url: "https://md.aaf.edu.au/aaf-metadata.xml"
+metadata_url: "https://fr.ac.lk/signedmetadata/metadata.xml"
 
 # Shared federation certificate
-metadata_cert_url: "https://md.aaf.edu.au/aaf-metadata-certificate.pem"
-metadata_cert_sha256sum: 00ec963039ca877b7111db3188d3d646e071c4c84ab8201fc35ad62a77ffa1a1
+metadata_cert_url: "https://fr.ac.lk/signedmetadata/metadata-signer"
+metadata_cert_sha256sum: 17d4adf0b48c5a9c008c1c8942e2cbd54d64f5b0f212c533d9de342ffa9b37c8
 
 # Metadata file name
-metadata_file_name: aaf-metadata.xml
+metadata_file_name: liaf-metadata.xml
 
 # Metadata certificate file name
-metadata_cert_file_name: aaf-metadata.pem
+metadata_cert_file_name: liaf-metadata.pem
 
 # Your organisation's name
 organisation_name: "The University of Example"
 
 # Your organisation's support desk URL
-organisation_support: "https://support.example.edu"
+organisation_support: "https://ac.lk"
 
 # Your organisation's home URL
-organisation_url: "https://example.edu"
+organisation_url: "https://ac.lk"
 
 # Your organisation's password reset URL
-password_reset_url: "https://changepw.example.edu"
+password_reset_url: "https://ac.lk"
 
 # Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
-home_organisation: "example.edu"
+home_organisation: "liaf.ac.lk"
 
 # Your schacHomeOrganizationType. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 # Relevant values are:
-# urn:mace:terena.org:schac:homeOrganizationType:au:university
-# urn:mace:terena.org:schac:homeOrganizationType:au:research-institution
-# urn:mace:terena.org:schac:homeOrganizationType:au:other
-home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:university"
+
+#urn:schac:homeOrganizationType:int:university
+#urn:schac:homeOrganizationType:int:library
+#urn:schac:homeOrganizationType:int:public-research-institution
+#urn:schac:homeOrganizationType:int:private-research-institution
+home_organisation_type: "urn:schac:homeOrganizationType:int:university"
 
 # Run yum -update on every execution of update_idp.sh
 server_patch: "true"
@@ -69,7 +71,7 @@ firewall: "firewalld"
 enable_backchannel: "false"
 
 # eduGAIN metadata
-edugain_metadata_url: "https://md.aaf.edu.au/aaf-edugain-metadata.xml"
+edugain_metadata_url: "https://fr.ac.lk/signedmetadata/LIAF_to_edugain.xml"
 
 # Enable eduGAIN
 enable_edugain: "false"
@@ -78,7 +80,7 @@ enable_edugain: "false"
 edugain_metadata_file_name: edugain-metadata.xml
 
 # eduGAIN Metadata certificate file name
-edugain_metadata_cert_file_name: aaf-metadata.pem
+edugain_metadata_cert_file_name: liaf-metadata.pem
 
 # Source Persistent ID attribute name (for Subject ID and Pairwise ID)
 source_persistent_id:
@@ -92,12 +94,33 @@ idp_behind_proxy: "false"
 # Set default encryption [GCM | CBC].
 default_encryption: "CBC"
 
-# FTicks KEY_ID (Value provided on request to support@aaf.edu.au)
+# FTicks KEY_ID (Value provided on request to tac@learn.ac.lk)
 fticks_key_id:
 
-# FTicks SECRET_KEY (Value provided on request to support@aaf.edu.au)
+# FTicks SECRET_KEY (Value provided on request to tac@learn.ac.lk)
 fticks_secret_key:
 
 # FTicks delivery stream name
 delivery_stream_name: aafFticksReceiver
 
+# Lets Encrypt Configuration
+# Change Domain name and Email as per your University
+domain_name: idp.example.edu
+acme_email: deepthi@learn.ac.lk
+
+# Acme Type & Version
+acme_challenge_type: http-01
+acme_version: 2
+
+#Production Certificate
+acme_directory: https://acme-v02.api.letsencrypt.org/directory
+
+# Staging Testing Certifcate
+#acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
+
+# Local LetsEncrypt Directories
+letsencrypt_dir: /etc/letsencrypt
+letsencrypt_keys_dir: /etc/letsencrypt/keys
+letsencrypt_csrs_dir: /etc/letsencrypt/csrs
+letsencrypt_certs_dir: /etc/letsencrypt/certs
+letsencrypt_account_key: /etc/letsencrypt/account/account.key
