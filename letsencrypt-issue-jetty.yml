@@ -96,4 +96,4 @@
       user: root
       minute: "30"
       hour: "3"
-      job: /opt/shibboleth-idp4-installer/repository/LetsEncrypt_Script.sh >> /opt/le-renew.log
+      job: /opt/shibboleth-idp5-installer/repository/LetsEncrypt_Script.sh >> /opt/le-renew.log
