@@ -148,7 +148,7 @@ You should use the ```deploy``` or ```upgrade``` scripts instead.
 
 If you must re-run bootstrap-v5.sh then you remove the lock file first. Note this will overwrite any previous installations.
 ```
-    rm /root/.lock-idp-bootstrap-v4 && ./bootstrap-v4.sh
+    rm /root/.lock-idp-bootstrap-v5 && ./bootstrap-v5.sh
 ```
 The bootstrap-v5 process will now start over and attempt to install and configure your server to operate as a Shibboleth IdP.
 
@@ -164,7 +164,7 @@ Using the new Hello World feature introduced at version 4.1. It should show the 
 
 2. Successful login and you receive an Uncaught Exception error message. This is caused be a requirement of the auEduPersonSharedToken generator. It requires the entityID of the IdP to be passed to it when generated a shared token for a user. Hello world does not provide this value. If the user already has a shared token it will be returned.
 
-```https://[HOST_NAME]/idp/profile/admin/hello```
+```https://idp.YOUR-DOMAIN.ac.lk/idp/profile/admin/hello```
 
 ### Environmental data for your IdP in bootstrap-v5.ini
 
@@ -206,7 +206,7 @@ If you make configuration changes directly within /opt/shibboleth/shibboleth-idp
 
 To deploy the changes you have made to the IdP run the deploy script.
 
-```/opt/shibboleth-idp4-installer/repository/deploy```
+```/opt/shibboleth-idp5-installer/repository/deploy```
 
 Changes to your assets area will be deployed to the operational IdP and the IdP will be restated. There will be a short outage of the IdP as it is restarted, usually less than 2 minutes.
 
@@ -228,7 +228,7 @@ You MUST have a tested rollback plan in place before running an deployment to en
 
 To upgrade to a later version of the IdP or supporting software run the upgrade script.
 
-```/opt/shibboleth-idp4-installer/repository/upgrade```
+```/opt/shibboleth-idp5-installer/repository/upgrade```
 
 This action only upgrades the Ansilbe configuration, tasks and templates used to deploy the IdP. It will NOT deploy the changes. You MUST deploy the IdP as a separate step for the changes to the Ansible files to be effected.
 
@@ -244,38 +244,8 @@ Additional functionally being added to the IdP
 
 ##### Deploy changes in your repository to your IdP
 
-```/opt/shibboleth-idp-installer/repository/deploy```
+```/opt/shibboleth-idp5-installer/repository/deploy```
 
 ##### Restart the IdP (Jetty)
 
 ```systemctl restart idp```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
