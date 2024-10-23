@@ -163,6 +163,37 @@
         fticks_key_id | default('', true) | trim != '' and 
         fticks_secret_key | default('', true) |  trim != ''
     - include_tasks: tasks/local_conf.yml
+        
+    - name: 'Check /etc/letsencrypt/certs is empty or not'
+      command: ls /etc/letsencrypt/certs
+      ignore_errors: True
+      register: FoundFiles   
+   
+    - name: "Get a cert from an https port"
+      get_certificate:
+        host: "{{ inventory_hostname }}"
+        port: 443
+      delegate_to: "{{ inventory_hostname }}"
+      run_once: true
+      ignore_errors: True
+      register: cert
+    
+    - name: "Cert expiry status"
+      vars:
+       expire_status: "{{ (( cert.expired )) }}"
+      shell: echo "{{ expire_status }}"
+      ignore_errors: True
+      register: Expiry_Result
+    
+    - name: "How many days until cert expires"
+      vars:
+        expire_days: "{{ (( cert.not_after | to_datetime('%Y%m%d%H%M%SZ')) - (ansible_date_time.iso8601 | to_datetime('%Y-%m-%dT%H:%M:%SZ')) ).days }}"
+      shell: echo "{{ expire_days }}"
+      ignore_errors: True
+      register: Num_of_ExpiryDays
+    
+    - include_tasks: tasks/letsencrypt-issue-jetty.yml
+      when: FoundFiles.stdout == "" or Expiry_Result.stdout == 'True' or Num_of_ExpiryDays.stdout | int <= 14
     - include_tasks: tasks/final.yml
 
   handlers:
