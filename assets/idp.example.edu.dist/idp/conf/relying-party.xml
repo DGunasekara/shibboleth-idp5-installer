@@ -57,8 +57,19 @@
     <!-- Container for any overrides you want to add. -->
 
     <util:list id="shibboleth.RelyingPartyOverrides">
-    
-        <!--
+       <bean parent="RelyingPartyByName" c:relyingPartyIds="https://proxy.liaf.ac.lk/Saml2/proxy_saml2_backend.xml">
+            <property name="profileConfigurations">
+                <list>
+                    <bean parent="SAML2.SSO" p:encryptAssertions="false" p:postAuthenticationFlows="attribute-release" />
+                    <ref bean="SAML2.Logout" />
+                    <ref bean="SAML2.AttributeQuery" />
+                    <ref bean="SAML2.ArtifactResolution" />
+                    <ref bean="Liberty.SSOS" />
+                </list>
+            </property>
+        </bean>
+       
+       <!--
         Override example that identifies a single RP by name and configures it
         for SAML 2 SSO without encryption. This is a common "vendor" scenario.
         -->
@@ -71,7 +82,17 @@
             </property>
         </bean>
         -->
-        
+        <bean parent="RelyingPartyByName" c:relyingPartyIds="https://bbb-fdds.learn.ac.lk/Saml2/proxy_saml2_backend.xml">
+            <property name="profileConfigurations">
+                <list>
+                    <bean parent="SAML2.SSO" p:encryptAssertions="false" p:postAuthenticationFlows="attribute-release" />
+                    <ref bean="SAML2.Logout" />
+                    <ref bean="SAML2.AttributeQuery" />
+                    <ref bean="SAML2.ArtifactResolution" />
+                    <ref bean="Liberty.SSOS" />
+                </list>
+            </property>
+        </bean> 
     </util:list>
 
 </beans>
