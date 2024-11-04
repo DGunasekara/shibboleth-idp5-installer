@@ -1,38 +1,38 @@
 ---
 # ------------------------------------------------------------------------------
-# EXAMPLE: CONFIGURED FOR AAF PRODUCTION ENVIRONMENT
+# EXAMPLE: CONFIGURED FOR LIAF PRODUCTION ENVIRONMENT
 # ------------------------------------------------------------------------------
 
 # Which environment are we running in
 aaf_prod_env: "true"
 
 # The host name of the target machine
-idp_host_name: "idp.example.edu"
+idp_host_name: "idp.YOUR-DOMAIN.ac.lk"
 
 # IdP Entity ID
-idp_entity_id: "https://idp.example.edu/idp/shibboleth"
+idp_entity_id: "https://idp.YOUR-DOMAIN.ac.lk/idp/shibboleth"
 
 # IdP 'Attribute Scope'
-idp_attribute_scope: "example.edu"
+idp_attribute_scope: "YOUR-DOMAIN.ac.lk"
 
 # Federation ID
-federation_id: "AAF"
+federation_id: "LIAF"
 
 # The federation's group id used for metadata-based attribute filtering
 federation_group_id: "https://md.aaf.edu.au/aaf-metadata.xml"
 
 # Shared federation metadata
-metadata_url: "https://md.aaf.edu.au/aaf-metadata.xml"
+metadata_url: "https://fr.ac.lk/signedmetadata/metadata.xml"
 
 # Shared federation certificate
-metadata_cert_url: "https://md.aaf.edu.au/aaf-metadata-certificate.pem"
+metadata_cert_url: "https://fr.ac.lk/signedmetadata/metadata-signer"
 metadata_cert_sha256sum: 00ec963039ca877b7111db3188d3d646e071c4c84ab8201fc35ad62a77ffa1a1
 
 # Metadata file name
-metadata_file_name: aaf-metadata.xml
+metadata_file_name: liaf-metadata.xml
 
 # Metadata certificate file name
-metadata_cert_file_name: aaf-metadata.pem
+metadata_cert_file_name: liaf-metadata.pem
 
 # Your organisation's name
 organisation_name: "The University of Example"
@@ -41,13 +41,13 @@ organisation_name: "The University of Example"
 organisation_support: "https://support.example.edu"
 
 # Your organisation's home URL
-organisation_url: "https://example.edu"
+organisation_url: "https://YOUR-DOMAIN.ac.lk"
 
 # Your organisation's password reset URL
 password_reset_url: "https://changepw.example.edu"
 
 # Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
-home_organisation: "example.edu"
+home_organisation: "YOUR-DOMAIN.ac.lk"
 
 # Your schacHomeOrganizationType. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 # Relevant values are:
