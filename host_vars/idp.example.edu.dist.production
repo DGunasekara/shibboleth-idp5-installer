@@ -26,7 +26,7 @@ metadata_url: "https://fr.ac.lk/signedmetadata/metadata.xml"
 
 # Shared federation certificate
 metadata_cert_url: "https://fr.ac.lk/signedmetadata/metadata-signer"
-metadata_cert_sha256sum: 00ec963039ca877b7111db3188d3d646e071c4c84ab8201fc35ad62a77ffa1a1
+metadata_cert_sha256sum: 17d4adf0b48c5a9c008c1c8942e2cbd54d64f5b0f212c533d9de342ffa9b37c8
 
 # Metadata file name
 metadata_file_name: liaf-metadata.xml
