@@ -29,13 +29,9 @@
     -->
 
     <!-- ========================================== -->
-    <!--         AAF CORE ATTRIBUTES                -->
+    <!--         CORE ATTRIBUTES                -->
     <!-- ========================================== -->
 
-    <!-- auEduPersonSharedToken -->
-    <AttributeDefinition id="auEduPersonSharedToken" xsi:type="Simple">
-        <InputDataConnector ref="sharedToken" attributeNames="auEduPersonSharedToken" />
-    </AttributeDefinition>
 
     <!-- displayName -->
     <AttributeDefinition id="displayName" xsi:type="Simple">
@@ -223,6 +219,10 @@
        <InputDataConnector ref="ldap" attributeNames="mail" />
     </AttributeDefinition>
 
+    <!-- mail -->
+    <AttributeDefinition id="email" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="email" />
+    </AttributeDefinition>
     <!-- givenName -->
     <AttributeDefinition id="givenName" xsi:type="Simple">
        <InputDataConnector ref="ldap" attributeNames="givenName" />
@@ -234,18 +234,15 @@
     </AttributeDefinition>
 
     <!-- eduPersonOrcid -->
-    <AttributeDefinition id="eduPersonOrcid" xsi:type="Simple">
+    <!--<AttributeDefinition id="eduPersonOrcid" xsi:type="Simple">
        <InputDataConnector ref="ldap" attributeNames="eduPersonOrcid" />
     </AttributeDefinition>
-
+-->
     <!-- ========================================== -->
-    <!--     AAF improtant Optional ATTRIBUTES       -->
+    <!--     improtant Optional ATTRIBUTES       -->
     <!-- ========================================== -->
 
-    <!-- dsdStudentId - Used by myEquals -->
-    <AttributeDefinition xsi:type="Simple" id="dsdStudentId">
-        <InputDataConnector ref="ldap" attributeNames="studentNumber" />
-    </AttributeDefinition>
+   
 
     <!-- cn (commonName) - Previously a CORE attribute, still used by many services -->
     <!--                   Note: Script is used to ensure cn is of the correct format -->
