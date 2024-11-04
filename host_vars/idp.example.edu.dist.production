@@ -51,10 +51,12 @@ home_organisation: "YOUR-DOMAIN.ac.lk"
 
 # Your schacHomeOrganizationType. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 # Relevant values are:
-# urn:mace:terena.org:schac:homeOrganizationType:au:university
-# urn:mace:terena.org:schac:homeOrganizationType:au:research-institution
-# urn:mace:terena.org:schac:homeOrganizationType:au:other
-home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:university"
+# urn:schac:homeOrganizationType:int:university
+# urn:schac:homeOrganizationType:int:library
+# urn:schac:homeOrganizationType:int:public-research-institution
+# urn:schac:homeOrganizationType:int:private-research-institution
+# urn:schac:homeOrganizationType:int:other
+home_organisation_type: "urn:schac:homeOrganizationType:int:university"
 
 # Run yum -update on every execution of update_idp.sh
 server_patch: "true"
@@ -69,7 +71,7 @@ firewall: "firewalld"
 enable_backchannel: "false"
 
 # eduGAIN metadata
-edugain_metadata_url: "https://md.aaf.edu.au/aaf-edugain-metadata.xml"
+edugain_metadata_url: "https://fr.ac.lk/signedmetadata/LIAF_to_edugain.xml"
 
 # Enable eduGAIN
 enable_edugain: "false"
@@ -78,7 +80,7 @@ enable_edugain: "false"
 edugain_metadata_file_name: edugain-metadata.xml
 
 # eduGAIN Metadata certificate file name
-edugain_metadata_cert_file_name: aaf-metadata.pem
+edugain_metadata_cert_file_name: liaf-metadata.pem
 
 # Source Persistent ID attribute name (for Subject ID and Pairwise ID)
 source_persistent_id:
