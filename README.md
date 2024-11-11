@@ -70,7 +70,7 @@ hostnamectl set-hostname <HOSTNAME>
 For new installations download the ```bootstrap-v5.ini``` file as follows;
 
 ```
-curl https://raw.githubusercontent.com/LEARN-LK/shibboleth-idp5-installer/master/bootstrap-v4.ini > bootstrap-v5.ini
+curl https://raw.githubusercontent.com/LEARN-LK/shibboleth-idp5-installer/refs/heads/main/bootstrap-v5.ini > bootstrap-v5.ini
 ```
 Edit the bootstrap-v5.ini file;
 
