@@ -70,9 +70,10 @@ hostnamectl set-hostname <HOSTNAME>
 For new installations download the ```bootstrap-v5.ini``` file as follows;
 
 ```
-curl https://raw.githubusercontent.com/pakistan-identity-federation/shibboleth-idp4-installer/master/bootstrap-v4.ini > bootstrap-v4.ini
-Edit the bootstrap-v4.ini file;
+curl https://raw.githubusercontent.com/LEARN-LK/shibboleth-idp5-installer/master/bootstrap-v4.ini > bootstrap-v5.ini
 ```
+Edit the bootstrap-v5.ini file;
+
 
 A description of each field is provided here and in the downloaded version of bootstrap-v5.in
 ```
@@ -87,7 +88,7 @@ Running the installer
 Download and prepare the bootstrap-v4.sh for execution using the following command;
 
 ```
-curl https://raw.githubusercontent.com/pakistan-identity-federation/shibboleth-idp4-installer/master/bootstrap-v4.sh > bootstrap-v4.sh && chmod u+x bootstrap-v4.sh
+curl https://raw.githubusercontent.com/LEARN-LK/shibboleth-idp5-installer/master/bootstrap-v5.sh > bootstrap-v5.sh && chmod u+x bootstrap-v5.sh
 ```
 Ensure that bootstrap-v5.ini is in the same directory used to download the bootstrap-v5.sh script.
 
