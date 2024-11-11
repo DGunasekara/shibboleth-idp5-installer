@@ -19,7 +19,7 @@ idp_attribute_scope: "YOUR-DOMAIN.ac.lk"
 federation_id: "LIAF"
 
 # The federation's group id used for metadata-based attribute filtering
-federation_group_id: "https://md.aaf.edu.au/aaf-metadata.xml"
+federation_group_id: "https://fr.ac.lk/signedmetadata/metadata.xml"
 
 # Shared federation metadata
 metadata_url: "https://fr.ac.lk/signedmetadata/metadata.xml"
@@ -44,7 +44,7 @@ organisation_support: "https://support.example.edu"
 organisation_url: "https://YOUR-DOMAIN.ac.lk"
 
 # Your organisation's password reset URL
-password_reset_url: "https://changepw.example.edu"
+password_reset_url: "https://passreset.YOUR-DOMAIN.ac.lk"
 
 # Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 home_organisation: "YOUR-DOMAIN.ac.lk"
