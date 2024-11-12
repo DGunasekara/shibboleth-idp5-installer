@@ -366,6 +366,8 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'source_persistent_id:' "\"$PERSISTENT_ATTRIBUTE_ID\"" \
     $ANSIBLE_HOST_VARS
+  replace_property 'domain_name:' "\"$HOST_NAME\"" $ANSIBLE_HOST_VARS
+  replace_property 'acme_email:' "\"$ACME_EMAIL\"" $ANSIBLE_HOST_VARS
   if [ $DO_APT == "true" ]; then
       replace_property 'patch_with:' 'apt' $ANSIBLE_HOST_VARS
   fi
