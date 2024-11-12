@@ -9,8 +9,8 @@
   tasks:
     - name: 'Verify Ansible meets AAF Installer version requirments.'
       assert:
-        that: "ansible_version.full is version_compare('2.9', '>=')"
-        msg: "You must update Ansible to at least 2.9 to use this version of the AAF IdP Installer."
+        that: "ansible_version.full is version_compare('2.14', '>=')"
+        msg: "You must update Ansible to at least 2.14 to use this version of the AAF IdP Installer."
 
     - name: 'Create local_conf.yml if it does not exist'
       copy:
@@ -28,12 +28,13 @@
     download:
       jetty:
         baseurl: "{{ aaf_binaries.baseurl }}/jetty"
-        version: 9.4.44.v20210927
-        sha256sum: fdfd0d1e2732576c09246df8484ff7ed4aa4c84143927936934cb6b8e5194fa3
+        version: 12.0.13
+        sha256sum: f25b80e6905f660135a216bcca0466bdf113e2dc74ccf33b37713c616569dcae
+
       shib_idp:
         baseurl: "{{ aaf_binaries.baseurl }}/shibboleth"
-        version: 4.1.5
-        sha256sum: 8173a2f5e05ec75e7b6ccbbab45639decb3286ecd705f1350a75a2b551096596
+        version: 5.1.3
+        sha256sum: cc72f0b15fda49b43bdd38cef3bdc62cbe01684b59c3d024b5de1ffdba42206e
       mysql_connector:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/Connector-J"
         version: 8.0.28
@@ -43,36 +44,45 @@
         version: 1.0.0
         sha256sum: 5e5de66e3517d30ff19ef66cf7a4aa5443b861d83e36a75e85845b007a03afbf
       aaf_shib_ext:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/aaf_shib_ext"
-        version: 2.0.0
-        sha256sum: 5244b2c2565ed40fe66ee8d551ad5e5f1aac0c26c06eace521658792297d464c
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/aaf-shibext"
+        version: 5.1.3
+        sha256sum: 63f2f49fbafbcaf7b478f26a9504a9924109c1194cf25991d5b7a283a176b962
       keystore:
         baseurl: "{{ aaf_binaries.baseurl }}/keystore"
         version: "Unknown"
         sha256sum: ae4185b2f0bb1af00abc6a4502fbfbdc6a90aec65c7bcee08e37a1bc20de5ac1 
-      logback_access:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
-        version: 1.2.10
-        sha256sum: 8462a7d983a10700c2cc559b7df4254f3a21c2611c32476cb5a6702ce51524c9
-      logback_classic:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
-        version: 1.2.10
-        sha256sum: 3160ae988af82c8bf3024ddbe034a82da98bb186fd09e76c50543c5b9da5cc5e
-      logback_core:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
-        version: 1.2.10
-        sha256sum: ba51a3fe56691f9dd7fe742e4a73c3ab4aaaa32202c73409ba56f18687399a08
       jcl_over_slf4j:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/slf4j"
-        version: 1.7.33
-        sha256sum: a2c0b70507e6f769ea571608fd9b728329c5c723af37c3b772127c58fb593dfc
-      slf4j_api:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/slf4j"
-        version: 1.7.33
-        sha256sum: 336811855ee97fcd8413343dc42f4d26362502860e8a9193e4db305e3e8ef80a
+        version: 2.0.16
+        sha256sum: 5744d62c5af556e839ab922c9fa3f737f0a5971e478ba68b2eb5256b2842ec78
+      logback_classic:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
+        version: 1.5.7
+        sha256sum: 7cb17f6b12fda4ee691916048ca7a9ae4d1b0cdbe68125acf9d6e2dafdb2c17d
+      logback_core:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
+        version: 1.5.7
+        sha256sum: c32b29af69c201efde686225f8b439f9053e88ecaaac110c02fcbe1b4723fadc
+      spring_jdbc:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/spring-jdbc"
+        version: 6.1.12
+        sha256sum: 0288a6866389989d386a32aaad15394575da6d7868dcfea6e90f4ba6ed685c8b
+
+      plugins:
+        baseurl: "{{ aaf_binaries.baseurl }}/plugins"
+        nashorn:
+          name: "net.shibboleth.idp.plugin.nashorn"
+          filename: "idp-plugin-nashorn-jdk-dist"
+          version: 2.0.0
+          sha256sum: 6de49acf3a53fbec8698f1e985a0b7b2d16605d1a1a84f8ebf65a6476ba85f2a
+        storage_jdbc:
+          name: "net.shibboleth.plugin.storage.jdbc"
+          filename: "java-plugin-jdbc-storage"
+          version: 2.0.1
+          sha256sum: abac557a582c344c990b5f270c3d84fbe93f8f93d52894057bf50ed037b476bd
     urls:
       jetty:
-        url: "{{ download.jetty.baseurl }}/jetty-distribution-{{ download.jetty.version }}.tar.gz"
+        url: "{{ download.jetty.baseurl }}/jetty-home-{{ download.jetty.version }}.tar.gz"
       shib_idp:
         url: "{{ download.shib_idp.baseurl }}/shibboleth-identity-provider-{{ download.shib_idp.version }}.tar.gz"
       mysql_connector:
@@ -80,30 +90,36 @@
       dta_ssl:
         url: "{{ download.dta_ssl.baseurl }}/jetty94-dta-ssl-{{download.dta_ssl.version}}.jar"
       aaf_shib_ext:
-        url: "{{ download.aaf_shib_ext.baseurl }}/aaf-shib-ext-{{ download.aaf_shib_ext.version }}.jar"
+        url: "{{ download.aaf_shib_ext.baseurl }}/aaf-shibext-{{ download.aaf_shib_ext.version }}.jar"
       keystore:
         url: "{{ download.keystore.baseurl }}/keystore"
-      logback_access:
-         url: "{{ download.logback_access.baseurl }}/logback-access-{{ download.logback_access.version }}.jar"
       logback_classic:
-         url: "{{ download.logback_classic.baseurl }}/logback-classic-{{ download.logback_classic.version }}.jar"
+        url: "{{ download.logback_classic.baseurl }}/logback-classic-{{ download.logback_classic.version }}.jar"
       logback_core:
-         url: "{{ download.logback_core.baseurl }}/logback-core-{{ download.logback_core.version }}.jar"
+        url: "{{ download.logback_core.baseurl }}/logback-core-{{ download.logback_core.version }}.jar"
       jcl_over_slf4j:
-         url: "{{ download.jcl_over_slf4j.baseurl }}/jcl-over-slf4j-{{ download.jcl_over_slf4j.version }}.jar"
-      slf4j_api:
-         url: "{{ download.slf4j_api.baseurl }}/slf4j-api-{{ download.slf4j_api.version }}.jar"
+        url: "{{ download.jcl_over_slf4j.baseurl }}/jcl-over-slf4j-{{ download.jcl_over_slf4j.version }}.jar"
+      spring_jdbc:
+        url: "{{ download.spring_jdbc.baseurl }}/spring-jdbc-{{ download.spring_jdbc.version }}.jar"
+      plugins:
+        nashorn:
+          truststore_url: "{{ download.plugins.baseurl }}/{{ download.plugins.nashorn.name }}/truststore.asc.{{ download.plugins.nashorn.version }}"
+          plugin_url: "{{ download.plugins.baseurl }}/{{ download.plugins.nashorn.name }}/{{ download.plugins.nashorn.filename }}-{{ download.plugins.nashorn.version }}.tar.gz"
+        storage_jdbc: 
+          truststore_url: "{{ download.plugins.baseurl }}/{{ download.plugins.storage_jdbc.name }}/truststore.asc.{{ download.plugins.storage_jdbc.version }}"
+          plugin_url: "{{ download.plugins.baseurl }}/{{ download.plugins.storage_jdbc.name }}/{{ download.plugins.storage_jdbc.filename }}-{{ download.plugins.storage_jdbc.version }}.tar.gz"
+
     installer:
       root: "{{ install_base }}/shibboleth-idp5-installer"
       path: "{{ install_base }}/shibboleth-idp5-installer/build"
       repository: "{{ install_base }}/shibboleth-idp5-installer/repository"
     jetty:
       root: "{{ install_base }}/jetty"
-      home: "{{ install_base }}/jetty/jetty-distribution-{{ download.jetty.version }}"
-      base: "{{ install_base }}/shibboleth/jetty"
+      home: "{{ install_base }}/jetty/jetty-home-{{ download.jetty.version }}"
+      base: "{{ install_base }}/shibboleth/jetty12"
       current: "{{ install_base }}/jetty/current"
-      tmp_directory: "{{ install_base }}/shibboleth/jetty/tmp"
-      state_directory: "{{ install_base }}/shibboleth/jetty/tmp"
+      tmp_directory: "{{ install_base }}/shibboleth/jetty12/tmp"
+      state_directory: "{{ install_base }}/shibboleth/jetty12/tmp"
       web_443_keystore_pw: "{{ lookup('password', installer.repository + '/passwords/' + inventory_hostname + '/web_443_keystore chars=letters,digits length=64') }}"
     shib_idp:
       home_root: "{{ install_base }}/shibboleth/shibboleth-idp"
@@ -135,7 +151,6 @@
       with_items:
         - '{{ installer.root }}'
         - '{{ installer.path }}'
-        
     - name: 'Check /etc/letsencrypt/certs is empty or not'
       command: ls /etc/letsencrypt/certs
       ignore_errors: True
@@ -166,6 +181,19 @@
     
     - include_tasks: tasks/letsencrypt-issue-jetty.yml
       when: FoundFiles.stdout == "" or Expiry_Result.stdout == 'True' or Num_of_ExpiryDays.stdout | int <= 14
+    - include_tasks: tasks/final.yml
+    
+    - include_tasks: tasks/system.yml
+    - include_tasks: tasks/jetty.yml
+    - include_tasks: tasks/db.yml
+    - include_tasks: tasks/idp.yml
+    - include_tasks: tasks/firewalld.yml
+      when: firewall is defined and firewall=="firewalld"
+    - include_tasks: tasks/fticks-forwarder.yml
+      when: >
+        fticks_key_id | default('', true) | trim != '' and 
+        fticks_secret_key | default('', true) |  trim != ''
+    - include_tasks: tasks/local_conf.yml
     - include_tasks: tasks/final.yml
 
   handlers:
