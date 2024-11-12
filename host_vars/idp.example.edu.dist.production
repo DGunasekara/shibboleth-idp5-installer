@@ -103,3 +103,24 @@ fticks_secret_key:
 # FTicks delivery stream name
 delivery_stream_name: aafFticksReceiver
 
+# Lets Encrypt Configuration
+# Change Domain name and Email as per your University
+domain_name: idp.your-domain.ac.lk
+acme_email: email0@your-domain.ac.lk
+
+# Acme Type & Version
+acme_challenge_type: http-01
+acme_version: 2
+
+#Production Certificate
+acme_directory: https://acme-v02.api.letsencrypt.org/directory
+
+# Staging Testing Certifcate
+#acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
+
+# Local LetsEncrypt Directories
+letsencrypt_dir: /etc/letsencrypt
+letsencrypt_keys_dir: /etc/letsencrypt/keys
+letsencrypt_csrs_dir: /etc/letsencrypt/csrs
+letsencrypt_certs_dir: /etc/letsencrypt/certs
+letsencrypt_account_key: /etc/letsencrypt/account/account.key
