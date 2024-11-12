@@ -1,0 +1,99 @@
+---
+  - name: "Pause 3 minutes to load Jetty Services"
+    pause:
+      minutes: 3
+      
+  - name: "Create required directories in /etc/letsencrypt"
+    file:
+      path: "/etc/letsencrypt/{{ item }}"
+      state: directory
+      owner: root
+      group: root
+      mode: u=rwx,g=x,o=x
+    with_items:
+    - account
+    - certs
+    - csrs
+    - keys
+
+  - name: "Generate a Let's Encrypt account key"
+    shell: "if [ ! -f {{ letsencrypt_account_key }} ]; then openssl genrsa 4096 | sudo tee {{ letsencrypt_account_key }}; fi"
+
+  - name: "Generate Let's Encrypt private key"
+    shell: "if [ -z $(ls -A /etc/letsencrypt/keys) ]; then openssl genrsa 4096 | sudo tee /etc/letsencrypt/keys/{{ domain_name }}.key; fi"
+
+  - name: "Generate Let's Encrypt CSR"
+    shell: "openssl req -new -sha256 -key /etc/letsencrypt/keys/{{ domain_name }}.key -subj \"/CN={{ domain_name }}\" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf \"\n[SAN]\nsubjectAltName=DNS:{{ domain_name }}\")) | sudo tee /etc/letsencrypt/csrs/{{ domain_name }}.csr"
+    args:
+      executable: /bin/bash
+
+  - name: "Begin Let's Encrypt challenges"
+    acme_certificate:
+      acme_directory: "{{ acme_directory }}"
+      acme_version: "{{ acme_version }}"
+      account_key_src: "{{ letsencrypt_account_key }}"
+      account_email: "{{ acme_email }}"
+      terms_agreed: 1
+      challenge: "{{ acme_challenge_type }}"
+      csr: "{{ letsencrypt_csrs_dir }}/{{ domain_name }}.csr"
+      dest: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
+      fullchain_dest: "{{ letsencrypt_certs_dir }}/fullchain_{{ domain_name }}.crt"
+      remaining_days: 91
+    register: acme_challenge_your_domain
+
+  - name: "Create .well-known/acme-challenge directory"
+    file:
+      path: /opt/shibboleth/jetty/webapps/root/.well-known/acme-challenge
+      state: directory
+      owner: root
+      group: root
+      mode: u=rwx,g=rx,o=rx
+
+  - name: "Implement http-01 challenge files"
+    copy:
+      content: "{{ item['value']['http-01']['resource_value'] }}"
+      dest: "/opt/shibboleth/jetty/webapps/root/{{ item['value']['http-01']['resource'] }}"
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
+    with_dict: "{{ acme_challenge_your_domain['challenge_data'] }}"
+
+  - name: "Complete Let's Encrypt challenges"
+    acme_certificate:
+      acme_directory: "{{ acme_directory }}"
+      acme_version: "{{ acme_version }}"
+      account_key_src: "{{ letsencrypt_account_key }}"
+      account_email: "{{ acme_email }}"
+      challenge: "{{ acme_challenge_type }}"
+      force: true
+      csr: "{{ letsencrypt_csrs_dir }}/{{ domain_name }}.csr"
+      dest: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
+      chain_dest: "{{ letsencrypt_certs_dir }}/chain_{{ domain_name }}.crt"
+      fullchain_dest: "{{ letsencrypt_certs_dir }}/fullchain_{{ domain_name }}"
+      data: "{{ acme_challenge_your_domain }}"
+   
+  - name: 'Remove PKCS#12 file'
+    openssl_pkcs12:
+      path: '{{ jetty.base }}/credentials/idp-userfacing.p12'
+      state: absent
+ 
+  - name: 'Apply Lets Encrypt Certifcate'
+    openssl_pkcs12:
+      action: export
+      path: '{{ jetty.base }}/credentials/idp-userfacing.p12'
+      friendly_name: 'Web Site cert and key'
+      privatekey_path: '/etc/letsencrypt/keys/{{ inventory_hostname }}.key'
+      certificate_path: '/etc/letsencrypt/certs/{{ inventory_hostname }}.crt'
+      other_certificates: '/etc/letsencrypt/certs/chain_{{ inventory_hostname }}.crt'
+      passphrase: '{{ jetty.web_443_keystore_pw }}'
+      state: present
+      mode: 0640
+      owner: root
+      group: jetty
+
+  - cron:
+      name: 'Make Crontab entry to run LetsEncrypt script'
+      user: root
+      minute: "30"
+      hour: "3"
+      job: /opt/shibboleth-idp4-installer/repository/LetsEncrypt_Script.sh >> /opt/le-renew.log
